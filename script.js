@@ -1,6 +1,6 @@
 // Write your JavaScript code here!
 
-const { myFetch, pickPlanet, addDestinationInfo } = require("./scriptHelper");
+const { myFetch, pickPlanet, addDestinationInfo, formSubmission } = require("./scriptHelper");
 
 window.addEventListener("load", function() {
 
@@ -18,7 +18,24 @@ window.addEventListener("load", function() {
       //  addDestinationInfo(document, name, diameter, star, distance, moons, imageUrl)
    })
 
-
+   let form = document.querySelector("form");
+   form.addEventListener("submit", function(event) {
+       let pilotNameInput = document.querySelector("input[name=pilotName]");
+       const pilotValue = pilotNameInput.value;
+       let copilotNameInput = document.querySelector("input[name=copilotName]");
+       const copilotValue = copilotNameInput.value;
+       let fuelLevelInput = document.querySelector("input[name=fuelLevel]");
+       const fuelValue = fuelLevelInput.value;
+       let cargoMassInput = document.querySelector("input[name=cargoMass]");
+       const cargoValue = cargoMassInput.value;
+       if (pilotValue === "" || copilotValue === "" || fuelValue === "" || cargoValue === "") {
+           alert("All fields are required!");
+           event.preventDefault();
+    }
+    
+    let list = document.getElementById('faultyItems');
+    formSubmission(document, list, pilotValue, copilotValue, fuelValue, cargoValue);
+});
    // get the form
    // add a listener to when the form submit
   //  form.addEventListener('submit', function(event) {
