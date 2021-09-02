@@ -77,7 +77,8 @@ copilotStatus.innerHTML = `Co-pilot ${copilotValue} is ready for launch`;
     launchStatus.innerHTML = 'Shuttle Not Ready for Launch';
 }
 
-if (cargoLevelValue >= 10000){
+if (cargoLevelValue >= 10000 && fuelLevelValue >= 10000){
+  fuelStatus.innerHTML = 'Fuel level high enough for launch';
   launchStatus.innerHTML = 'Shuttle Not Ready for Launch';
   launchStatus.style.color = 'rgb(199, 37, 78)';
   cargoStatus.innerHTML = 'Cargo mass too heavy for launch';
