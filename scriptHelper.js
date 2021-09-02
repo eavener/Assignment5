@@ -3,32 +3,32 @@ require('isomorphic-fetch');
 
 function addDestinationInfo(document, name, diameter, star, distance, moons, imageUrl) {
   // get the missionTarget div
+  let missionTarget = document.getElementById('missionTarget');
   // set the inner HTML to this
   // fill in the information that is passed in
    // Here is the HTML formatting for our mission target div.
-   /*
-    `
+   
+   missionTarget.innerHTML = `
                 <h2>Mission Destination</h2>
                 <ol>
                     <li>Name: ${name}</li>
-                    <li>Diameter: </li>
+                    <li>Diameter: ${diameter}</li>
                     <li>Star: ${star}</li>
-                    <li>Distance from Earth: </li>
-                    <li>Number of Moons: </li>
+                    <li>Distance from Earth: ${distance}</li>
+                    <li>Number of Moons: ${moons}</li>
                 </ol>
-                <img src="">
-                `
-   */
+                <img src="${imageUrl}">
+                `;
 }
 
 function validateInput(testInput) {
   if (typeof(testInput) === null || testInput === ''){
     return('Empty');
 }
-if (isNaN(testInput) === true){
+else if (isNaN(Number(testInput))){
     return('Not a Number');
 }
-if (isNaN(testInput) === false){
+else{
     return('Is a Number');
 }
 }
@@ -71,21 +71,21 @@ copilotStatus.innerHTML = `CoPilot ${copilotValue} is ready for launch`;
   // check if the fuel level is less 10,000
     // change launchStatus to "Shuttle not ready for launch", and color to red
     // change the fuelStatus to "Fuel level too low for launch"
-  if (fuelLevelInput < 10000) {
+  if (fuelLevelValue < 10000) {
     fuelStatus.innerHTML = 'Fuel level too low for launch';
-    launchStatus.style.fontcolor = 'red';
+    launchStatus.style.color = 'red';
     launchStatus.innerHTML = 'Shuttle not ready for launch';
 }
 
-if (cargoLevelInput >= 10000){
+if (cargoLevelValue >= 10000){
   launchStatus.innerHTML = 'Shuttle not ready for launch';
-  launchStatus.style.fontcolor = 'red';
+  launchStatus.style.color = 'red';
   cargoStatus.innerHTML = 'Cargo level too high for launch';
 }
 
-if (fuelLevelInput >= 10000 && cargoLevelInput < 10000){
+if (fuelLevelValue >= 10000 && cargoLevelValue < 10000){
   launchStatus.innerHTML = 'Shuttle is ready for launch';
-  launchStatus.style.fontcolor = 'green';
+  launchStatus.style.color = 'green';
 }
   // check if the cargo level is more than 10,000
     // change launchStatus to "Shuttle not ready for launch", and color to red
@@ -96,18 +96,26 @@ if (fuelLevelInput >= 10000 && cargoLevelInput < 10000){
 }
 
 async function myFetch() {
-    let planetsReturned;
-
-  planetsReturned = await fetch('https://handlers.education.launchcode.org/static/planets.json').then(function (response) {
+  let planetsResponse;
+  planetsResponse = await fetch('https://handlers.education.launchcode.org/static/planets.json');
+  jsonResponse = await planetsResponse.json();
+  /*.then(function(response) {
       // get the json from the response
-        });
+      return response.json();
+})
+      .then(function(json) {
+        console.log(json);
+        return json;
+      });*/
 
-    return planetsReturned;
+    return jsonResponse;
 }
 
 function pickPlanet(planets) {
   // randomly pick a planet from the array
   // Math random for index
+  let index = Math.floor(Math.random()*planets.length);
+   return planets[index];
 }
 
 module.exports.addDestinationInfo = addDestinationInfo;
